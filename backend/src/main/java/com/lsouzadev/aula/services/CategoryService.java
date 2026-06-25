@@ -1,5 +1,6 @@
 package com.lsouzadev.aula.services;
 
+import com.lsouzadev.aula.dto.CategoryDto;
 import com.lsouzadev.aula.entity.Category;
 import com.lsouzadev.aula.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,9 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDto> findAll() {
+        List<Category> listEntity = categoryRepository.findAll();
+
+        return listEntity.stream().map(x -> new CategoryDto(x)).toList();
     }
 }

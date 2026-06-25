@@ -1,5 +1,6 @@
 package com.lsouzadev.aula.controller;
 
+import com.lsouzadev.aula.dto.CategoryDto;
 import com.lsouzadev.aula.entity.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll() {
+    public ResponseEntity<List<CategoryDto>> findAll() {
        return ResponseEntity.ok(categoryService.findAll());
     }
 }
