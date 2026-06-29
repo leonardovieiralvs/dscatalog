@@ -3,10 +3,7 @@ package com.lsouzadev.aula.controller;
 import com.lsouzadev.aula.dto.CategoryDto;
 import com.lsouzadev.aula.entity.Category;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.lsouzadev.aula.services.CategoryService;
 
 import java.util.List;
@@ -29,5 +26,15 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryDto> insert(@RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.insert(categoryDto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDto> update(@PathVariable Long id, @RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.update(id, categoryDto));
     }
 }

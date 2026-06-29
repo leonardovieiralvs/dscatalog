@@ -27,4 +27,23 @@ public class CategoryService {
         Category findById = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
         return new CategoryDto(findById);
     }
+
+    public CategoryDto insert(CategoryDto categoryDto) {
+
+        Category entity = new Category();
+        entity.setName(categoryDto.getName());
+
+        Category save = categoryRepository.save(entity);
+
+        return new CategoryDto(save);
+    }
+
+    public CategoryDto update(Long id, CategoryDto categoryDto) {
+        Category byId = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
+
+        byId.setName(categoryDto.getName());
+        Category save = categoryRepository.save(byId);
+
+        return new CategoryDto(save);
+    }
 }
