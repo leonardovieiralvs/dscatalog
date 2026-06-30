@@ -4,6 +4,9 @@ import com.lsouzadev.aula.dto.CategoryDto;
 import com.lsouzadev.aula.entity.Category;
 import com.lsouzadev.aula.exceptions.NotFoundException;
 import com.lsouzadev.aula.repository.CategoryRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +29,11 @@ public class CategoryService {
     public CategoryDto findById(Long id) {
         Category findById = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
         return new CategoryDto(findById);
+    }
+
+    public Page<CategoryDto> findAllPaged(PageRequest pageRequest) {
+        Page<Category> list = categoryRepository.findAll(pageRequest);
+        return list.map(x -> new CategoryDto(x));
     }
 
     public CategoryDto insert(CategoryDto categoryDto) {
