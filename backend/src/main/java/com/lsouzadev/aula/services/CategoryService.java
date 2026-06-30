@@ -46,4 +46,10 @@ public class CategoryService {
 
         return new CategoryDto(save);
     }
+
+    public void delete(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
+
+        categoryRepository.delete(category);
+    }
 }
