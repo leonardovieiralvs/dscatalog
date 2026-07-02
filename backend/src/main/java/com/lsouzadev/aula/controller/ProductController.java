@@ -1,7 +1,7 @@
 package com.lsouzadev.aula.controller;
 
-import com.lsouzadev.aula.dto.CategoryDto;
-import com.lsouzadev.aula.services.CategoryService;
+import com.lsouzadev.aula.dto.ProductDto;
+import com.lsouzadev.aula.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -9,44 +9,44 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/categories")
-public class CategoryController {
+@RequestMapping("/products")
+public class ProductController {
 
-    private final CategoryService categoryService;
+    private final ProductService productService;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDto>> findAllPaged(@RequestParam(value = "page", defaultValue = "0") Integer page,
+    public ResponseEntity<Page<ProductDto>> findAllPaged(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                           @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
                                                           @RequestParam(value = "direction", defaultValue = "ASC") String direction,
                                                           @RequestParam(value = "orderBy", defaultValue = "name") String orderBy) {
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
-        return ResponseEntity.ok(categoryService.findAllPaged(pageRequest));
+        return ResponseEntity.ok(productService.findAllPaged(pageRequest));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(categoryService.findById(id));
+    public ResponseEntity<ProductDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> insert(@RequestBody CategoryDto categoryDto) {
-        return ResponseEntity.ok(categoryService.insert(categoryDto));
+    public ResponseEntity<ProductDto> insert(@RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(productService.insert(productDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDto> update(@PathVariable Long id, @RequestBody CategoryDto categoryDto) {
-        return ResponseEntity.ok(categoryService.update(id, categoryDto));
+    public ResponseEntity<ProductDto> update(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(productService.update(id, productDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        categoryService.delete(id);
+        productService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
