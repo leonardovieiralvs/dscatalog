@@ -1,8 +1,11 @@
 package com.lsouzadev.aula.services;
 
+import com.lsouzadev.aula.dto.CategoryDto;
 import com.lsouzadev.aula.dto.ProductDto;
+import com.lsouzadev.aula.entity.Category;
 import com.lsouzadev.aula.entity.Product;
 import com.lsouzadev.aula.exceptions.NotFoundException;
+import com.lsouzadev.aula.repository.CategoryRepository;
 import com.lsouzadev.aula.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,9 +17,11 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<ProductDto> findAll() {
@@ -38,25 +43,39 @@ public class ProductService {
     public ProductDto insert(ProductDto productDto) {
 
         Product entity = new Product();
-        entity.setName(productDto.getName());
+        copyDtoToEntity(entity, productDto);
 
         Product save = productRepository.save(entity);
-
         return new ProductDto(save);
+
     }
 
-    public ProductDto update(Long id, ProductDto categoryDto) {
-        Product byId = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
+    public ProductDto update(Long id, ProductDto productDto) {
+        Product entity = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
+        copyDtoToEntity(entity, productDto);
 
-        byId.setName(categoryDto.getName());
-        Product save = productRepository.save(byId);
-
+        Product save = productRepository.save(entity) ;
         return new ProductDto(save);
+
     }
 
     public void delete(Long id) {
         Product category = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
 
         productRepository.delete(category);
+    }
+
+    public void copyDtoToEntity(Product entity, ProductDto productDto) {
+
+        entity.setName(productDto.getName());
+        entity.setDescription(productDto.getDescription());
+        entity.setPrice(productDto.getPrice());
+        entity.setImgUrl(productDto.getImgUrl());
+        entity.setDate(productDto.getDate());
+
+        for (CategoryDto cat : productDto.getCategories()) {
+            Category category = categoryRepository.getReferenceById(cat.getId());
+            entity.getCategories().add(category);
+        }
     }
 }
