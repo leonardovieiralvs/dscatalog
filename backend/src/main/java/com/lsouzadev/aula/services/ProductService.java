@@ -9,6 +9,7 @@ import com.lsouzadev.aula.repository.CategoryRepository;
 import com.lsouzadev.aula.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class ProductService {
         return new ProductDto(entity, entity.getCategories());
     }
 
-    public Page<ProductDto> findAllPaged(PageRequest pageRequest) {
-        Page<Product> list = productRepository.findAll(pageRequest);
+    public Page<ProductDto> findAllPaged(Pageable pageable) {
+        Page<Product> list = productRepository.findAll(pageable);
         return list.map(x -> new ProductDto(x));
     }
 

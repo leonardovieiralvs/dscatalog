@@ -31,8 +31,8 @@ public class CategoryService {
         return new CategoryDto(findById);
     }
 
-    public Page<CategoryDto> findAllPaged(PageRequest pageRequest) {
-        Page<Category> list = categoryRepository.findAll(pageRequest);
+    public Page<CategoryDto> findAllPaged(Pageable pageable) {
+        Page<Category> list = categoryRepository.findAll(pageable);
         return list.map(x -> new CategoryDto(x));
     }
 
