@@ -7,8 +7,8 @@ import com.lsouzadev.aula.entity.Product;
 import com.lsouzadev.aula.exceptions.NotFoundException;
 import com.lsouzadev.aula.repository.CategoryRepository;
 import com.lsouzadev.aula.repository.ProductRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -55,15 +55,20 @@ public class ProductService {
         Product entity = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
         copyDtoToEntity(entity, productDto);
 
-        Product save = productRepository.save(entity) ;
+        Product save = productRepository.save(entity);
         return new ProductDto(save);
 
     }
 
     public void delete(Long id) {
-        Product category = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
-
-        productRepository.delete(category);
+        if (!productRepository.existsById(id)) {
+            throw new NotFoundException("Id not found " + id);
+        }
+        try {
+            productRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Integrity violation");
+        }
     }
 
     public void copyDtoToEntity(Product entity, ProductDto productDto) {

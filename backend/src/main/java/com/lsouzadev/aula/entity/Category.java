@@ -33,6 +33,10 @@ public class Category {
         this.name = name;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
     public Long getId() {
         return id;
     }
