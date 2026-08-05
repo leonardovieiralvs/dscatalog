@@ -24,6 +24,9 @@ public class Role {
         this.authority = authority;
     }
 
+    public Role() {
+    }
+
     public Long getId() {
         return id;
     }
