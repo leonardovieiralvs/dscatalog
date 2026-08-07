@@ -1,6 +1,7 @@
 package com.lsouzadev.aula.controller;
 
 import com.lsouzadev.aula.dto.ProductDto;
+import com.lsouzadev.aula.dto.UserDto;
 import com.lsouzadev.aula.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +22,6 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Page<ProductDto>> findAllPaged(Pageable pageable) {
-
-
         return ResponseEntity.ok(productService.findAllPaged(pageable));
     }
 
