@@ -3,6 +3,7 @@ package com.lsouzadev.aula.controller;
 import com.lsouzadev.aula.dto.UserDto;
 import com.lsouzadev.aula.dto.UserInsertDto;
 import com.lsouzadev.aula.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> insert(@RequestBody UserInsertDto userDto) {
+    public ResponseEntity<UserDto> insert(@Valid @RequestBody UserInsertDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.insert(userDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.update(id, userDto));
     }
 

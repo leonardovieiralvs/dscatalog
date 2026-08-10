@@ -2,6 +2,10 @@ package com.lsouzadev.aula.dto;
 
 
 import com.lsouzadev.aula.entity.User;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,10 +13,20 @@ import java.util.Set;
 public class UserDto {
 
     private Long id;
+
+    @NotBlank(message = "Campo obrigatorio")
+    @Size(min = 3, max = 80, message = "Nome deve ter entre 3 e 80 caracteres")
     private String firstName;
+
+    @NotBlank(message = "Campo obrigatorio")
+    @Size(min = 3, max = 80, message = "Sobrenome deve ter entre 3 e 80 caracteres")
     private String lastName;
+
+    @NotBlank(message = "Campo obrigatorio")
+    @Email(message = "Email invalido")
     private String email;
 
+    @Valid
     private Set<RoleDto> roles = new HashSet<>();
 
 

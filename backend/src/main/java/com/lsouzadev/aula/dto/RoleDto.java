@@ -1,9 +1,11 @@
 package com.lsouzadev.aula.dto;
 
 import com.lsouzadev.aula.entity.Role;
+import jakarta.validation.constraints.NotNull;
 
 public class RoleDto {
 
+    @NotNull(message = "Campo obrigatorio")
     private Long id;
     private String authority;
 

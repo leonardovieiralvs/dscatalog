@@ -1,10 +1,15 @@
 package com.lsouzadev.aula.dto;
 
 import com.lsouzadev.aula.entity.Category;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class CategoryDto {
 
     private Long id;
+
+    @NotBlank(message = "Campo obrigatorio")
+    @Size(min = 3, max = 80, message = "Nome deve ter entre 3 e 80 caracteres")
     private String name;
 
     public CategoryDto() {

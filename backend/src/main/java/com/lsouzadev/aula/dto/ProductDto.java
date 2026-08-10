@@ -2,6 +2,12 @@ package com.lsouzadev.aula.dto;
 
 import com.lsouzadev.aula.entity.Category;
 import com.lsouzadev.aula.entity.Product;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -11,12 +17,28 @@ import java.util.Set;
 public class ProductDto {
 
     private Long id;
+
+    @NotBlank(message = "Campo obrigatorio")
+    @Size(min = 3, max = 80, message = "Nome deve ter entre 3 e 80 caracteres")
     private String name;
+
+    @NotBlank(message = "Campo obrigatorio")
+    @Size(min = 10, message = "Descricao deve ter no minimo 10 caracteres")
     private String description;
+
+    @NotNull(message = "Campo obrigatorio")
+    @Positive(message = "Preco deve ser positivo")
     private Double price;
+
+    @NotBlank(message = "Campo obrigatorio")
+    @Size(max = 255, message = "URL da imagem deve ter no maximo 255 caracteres")
     private String imgUrl;
+
+    @NotNull(message = "Campo obrigatorio")
     private Instant date;
 
+    @Valid
+    @NotEmpty(message = "Produto deve ter pelo menos uma categoria")
     private List<CategoryDto> categories = new ArrayList<>();
 
     public ProductDto() {

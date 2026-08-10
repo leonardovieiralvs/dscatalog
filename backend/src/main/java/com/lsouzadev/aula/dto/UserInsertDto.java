@@ -1,7 +1,12 @@
 package com.lsouzadev.aula.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UserInsertDto extends UserDto {
 
+    @NotBlank(message = "Campo obrigatorio")
+    @Size(min = 8, max = 30, message = "Senha deve ter entre 8 e 30 caracteres")
     private String password;
 
 
