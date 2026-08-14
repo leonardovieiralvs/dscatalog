@@ -6,5 +6,5 @@ import java.time.Instant;
 import java.util.List;
 
 @Builder
-public record CustomError(Instant timestamp, Integer status, String errorMessage, List<ErroCampo> errors, String path) {
+public record CustomError(Instant timestamp, Integer status, String errorMessage, List<FieldMessage> errors, String path) {
 }

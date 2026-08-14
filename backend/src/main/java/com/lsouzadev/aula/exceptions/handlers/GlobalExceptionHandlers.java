@@ -1,7 +1,7 @@
 package com.lsouzadev.aula.exceptions.handlers;
 
 import com.lsouzadev.aula.dto.CustomError;
-import com.lsouzadev.aula.dto.ErroCampo;
+import com.lsouzadev.aula.dto.FieldMessage;
 import com.lsouzadev.aula.exceptions.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -35,14 +35,14 @@ public class GlobalExceptionHandlers {
     public ResponseEntity<CustomError> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex,
                                                                               HttpServletRequest request) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        List<ErroCampo> errors = fieldErrors.stream().map(fe -> new ErroCampo(fe.getField(), fe.getDefaultMessage())).toList();
+        List<FieldMessage> errors = fieldErrors.stream().map(fe -> new FieldMessage(fe.getField(), fe.getDefaultMessage())).toList();
         CustomError customError = CustomError.builder()
                 .timestamp(Instant.now())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
                 .errorMessage("Erro de validacao")
                 .errors(errors)
                 .path(request.getRequestURI())
                 .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(customError);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(customError);
     }
 }

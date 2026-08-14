@@ -1,6 +1,7 @@
 package com.lsouzadev.aula.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 import java.util.HashSet;
 import java.util.Objects;

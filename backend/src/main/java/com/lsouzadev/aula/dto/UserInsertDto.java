@@ -1,8 +1,10 @@
 package com.lsouzadev.aula.dto;
 
+import com.lsouzadev.aula.services.validation.UserInsertValid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@UserInsertValid
 public class UserInsertDto extends UserDto {
 
     @NotBlank(message = "Campo obrigatorio")
